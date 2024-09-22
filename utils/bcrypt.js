@@ -3,6 +3,6 @@ import bcrypt from 'bcrypt';
 export const hashedPassword=async  (password)=>{
     return await bcrypt.hash(password,10);
 };
-// export const comparePassword=async (password,newpassword)=>{
-//     return await bcrypt.compare(password,newpassword)
-// }
+export const comparePassword=async (password,newpassword)=>{
+    return await bcrypt.compare(password,newpassword)
+}
