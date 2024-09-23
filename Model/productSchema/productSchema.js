@@ -1,8 +1,7 @@
-import { required } from "joi";
 import mongoose from "mongoose";
-export const productSchema=new mongoose.Schema(
+ const productSchema= new mongoose.Schema(
     {
-        title:{
+        product_name:{
             type:String,
             required:true
         },
@@ -19,9 +18,7 @@ export const productSchema=new mongoose.Schema(
             type:Number,
             required:true
         },
-        color:{
-            type:String
-        },
+        
         category:{
             type:String,
             required:true
@@ -39,3 +36,5 @@ export const productSchema=new mongoose.Schema(
         timestamps:true
     }
 )
+ const Products=mongoose.model("Products",productSchema)
+export default Products
