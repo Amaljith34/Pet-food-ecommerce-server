@@ -1,6 +1,9 @@
 import express from 'express';
 import userRouter from './Routes/userSide/userRouter.js';
 import mongoose from 'mongoose';
+import dotenv from "dotenv";
+
+dotenv.config()
 const app = express();
 
 //conection

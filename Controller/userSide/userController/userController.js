@@ -71,7 +71,7 @@
 //     }
 // } 
 
-import { ValidationError } from 'express-joi-validations';
+
 import { User } from '../../../Model/userSchema/userSchema.js';
 import signUpValidation from '../../../middleware/joivalidation/signUpValidation.js';
 import { comparePassword, hashedPassword } from '../../../utils/bcrypt.js';
@@ -138,3 +138,15 @@ export const login = async (req, res) => {
         res.status(500).json({ success: false, message: `Bad request: ${error.message}` });
     }
 }
+
+//// logout
+
+export const logout= async(req,res)=>{
+    try {
+        res.cookie
+    } catch (error) {
+        
+    }
+}
+
+
