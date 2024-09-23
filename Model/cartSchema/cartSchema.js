@@ -1,4 +1,3 @@
-import { ref, required } from "joi";
 import mongoose from "mongoose";
 
 export const cartSchema=new mongoose.Schema({
@@ -22,3 +21,5 @@ export const cartSchema=new mongoose.Schema({
        }
     ]
 })
+const Cart=mongoose.model("Cart",cartSchema)
+export default Cart
