@@ -9,13 +9,13 @@ export const getProducts=async (req,res)=>{
         if(category){
             getProducts=await Products.find({category});
             if(getProducts.length===0){
-                return res.status(400).json({success:false,message:"category not found"})
+                return res.status(400).json({success:false,message:"Category not Found"})
             }
         }
         else{
             getProducts=await Products.find();
         }
-        res.status(200).json({success:true,data:getProducts,message:"product fetched successfuly"})
+        res.status(200).json({success:true,data:getProducts,message:"Product fetched successfuly"})
     } catch (error) {
         res.status(500).json({success:false,message:`bad request ${error.message}`})
     }
