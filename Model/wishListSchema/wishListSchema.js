@@ -1,4 +1,4 @@
-import { required } from "joi";
+
 import mongoose from "mongoose";
 
 const  wishListSchema=  new mongoose.Schema({
