@@ -5,6 +5,10 @@ import mongoose from "mongoose";
             type:String,
             required:true
         },
+        name:{
+            type:String,
+            required:true
+        },
         imageSrc:{
             type:String
         },
@@ -36,5 +40,6 @@ import mongoose from "mongoose";
         timestamps:true
     }
 )
- const Products=mongoose.model("Products",productSchema)
-export default Products
+
+const Products = mongoose.model('Products', productSchema); // Ensure 'Products' matches the model name
+export default Products;
