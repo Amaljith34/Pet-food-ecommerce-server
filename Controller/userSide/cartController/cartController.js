@@ -113,3 +113,30 @@ export const removeCart= async (req,res)=>{
       res.status(500).json({success:false,message:`Cart removing failed : ${error.message}`})
    }
 }
+
+///quantity increment
+
+export const quantityIncrement= async (req,res)=>{
+  try {
+    const userId=req.params.id;
+    const {productId,quantity}=req.body;
+    if(!mongoose.Types.ObjectId.isValid(userId)){
+      return res.status(400).json({success:false,message:"No user found"})
+    }
+    const cart = await Cart.findOne({userId});
+    const productExists=cart.products.findIndex((product)=>product.productId.toString()=== productId)
+    if(productExists===-1){
+      return res.status(404).json({success:false,message:"Product not found"})
+    }
+    const product=await cart.products.findIndex((product)=>product.productId.toString()===productId)
+    if(product>=0){
+      cart.products[product].quantity += 1;
+    }
+    await cart.save();
+    res.json({success:true,message:"Product quantity increased successfuly",data:cart});
+    
+  } catch (error) {
+    res.status(200).json({success:false,message:`Bad message ${error.message}`})
+  }
+}
+
