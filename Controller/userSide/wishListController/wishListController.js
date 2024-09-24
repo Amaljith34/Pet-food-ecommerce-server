@@ -69,13 +69,41 @@ export const getWishList= async(req,res)=>{
 //remove wishlist
 
 export const  deleteWishList=async (req,res)=>{
+    try{
     const userId=req.params.id;
     const{productId}=req.body;
     if(!mongoose.Types.ObjectId.isValid(userId)){
-        res.status(400).json({success:false,message:"User not found"})
+        res.status(400).json({success:false,message:"Invalid user id"})
     }
     const productExists=await Productschema.findById(productId)
     if(!productExists){
         return res.status(404).json({success:false,message:"Product not found"})
     }
+    const user=await User.findById(userId);
+    if(!user){
+        return res.status(404).json({success:false,message:"User not found"})
+    }
+    const wishlist=await Wishlistschema.findOne({userId});
+    if(!wishlist){
+        return res.status(404).json({success:false,message:"wishlist not found"})
+    }
+    const productIndex=wishlist.products.findIndex(product=>product.productId.toString()===productId)
+
+    if(productIndex=== -1){
+        return res.status(404).json({success:false,message:"product not found in wishlist"})
+    }
+    wishlist.products.splice(productIndex,1);
+    if(wishlist.products.length>=0){
+        await wishlist.save()
+    }
+    else{
+        await Wishlistschema.deleteOne({_id:wishlist._id})
+        user.wishlist=undefined
+    }
+    await user.save();
+    res.status(200).json({success:true,data:wishlist.products,message:"product removed from wishlist successfully"})
+}
+catch(error){
+    res.status(500).json({success:false,message:` Faild to remove product :${error.message}`})
+}
 }
