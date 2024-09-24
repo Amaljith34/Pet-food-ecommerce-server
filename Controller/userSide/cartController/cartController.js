@@ -98,7 +98,7 @@ export const removeCart= async (req,res)=>{
          (product)=>product.productId.toString()===productId
       );
       if(productExists === -1){
-         res.status(400).json({success:false,message:`product not found in a cart`})
+         res.status(400).json({success:false,message:`Product not found in a cart`})
       }
       cart.products.splice(productExists,1)
       if(cart.products.length===0){
@@ -110,6 +110,6 @@ export const removeCart= async (req,res)=>{
       await user.save()
       res.status(200).json({success:true,message:`Product removed from cart successfully`})
    } catch (error) {
-      res.status(500).json({success:false,message:`cart removing failed : ${error.message}`})
+      res.status(500).json({success:false,message:`Cart removing failed : ${error.message}`})
    }
 }
