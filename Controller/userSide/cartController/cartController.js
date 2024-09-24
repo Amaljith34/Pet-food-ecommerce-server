@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Products from "../../../Model/productSchema/productSchema.js";
+import Productschema from "../../../Model/productSchema/productSchema.js";
 import { User } from "../../../Model/userSchema/userSchema.js";
 import Cart from "../../../Model/cartSchema/cartSchema.js";
 
@@ -17,7 +17,7 @@ export const addToCart = async (req, res) => {
      }
  
      const user = await User.findById(userId);
-     const product = await Products.findById(productId);
+     const product = await Productschema.findById(productId);
      if (!product) {
        return res
          .status(404)

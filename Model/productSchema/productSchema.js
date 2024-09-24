@@ -41,5 +41,5 @@ import mongoose from "mongoose";
     }
 )
 
-const Products = mongoose.model('Products', productSchema); // Ensure 'Products' matches the model name
-export default Products;
+const Productschema = mongoose.model('Products', productSchema); // Ensure 'Products' matches the model name
+export default Productschema;
