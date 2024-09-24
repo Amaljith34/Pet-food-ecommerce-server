@@ -140,3 +140,35 @@ export const quantityIncrement= async (req,res)=>{
   }
 }
 
+////quantity decrement
+
+export const quantityDecrement= async (req,res)=>{
+  try {
+    const userId=req.params.id;
+    const {productId,quantity}=req.body;
+    if(!mongoose.Types.ObjectId.isValid(productId)){
+      res.status(400).json({success:false,message:"User not Found"});
+    }
+    const cart= await Cart.findOne({userId});
+    if(!cart){
+      return res.status(404).json({success:false,message:"Cart not found"})
+    }
+    const productExist=cart.products.findIndex((product)=>product.productId.toString()===productId)
+    if(productExist=== -1){
+      return res.status(404).json({success:false,message:"Product not found"})
+    }
+    const product=cart.products.findIndex((product)=>product.productId.toString()===productId)
+    if(product>=0){
+      cart.products[product].quantity -= 1;
+    }
+    if(cart.products[product].quantity <1){
+      cart.products[product].quantity=1
+    }
+    await cart.save();
+    res.status(200).json({success:true,data:cart,message:"Product quantity decresed successfully"})
+
+  } catch (error) {
+   res.status(200)
+    .json({ success: false, message: `Bad requset : ${error.message}` });
+  }
+}
