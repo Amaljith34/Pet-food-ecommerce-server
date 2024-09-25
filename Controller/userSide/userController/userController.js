@@ -72,7 +72,7 @@
 // } 
 
 
-import Cart from '../../../Model/cartSchema/cartSchema.js';
+
 import { User } from '../../../Model/userSchema/userSchema.js';
 import signUpValidation from '../../../middleware/joivalidation/signUpValidation.js';
 import { comparePassword, hashedPassword } from '../../../utils/bcrypt.js';
