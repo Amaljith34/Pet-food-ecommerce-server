@@ -1,6 +1,5 @@
 import jwt  from "jsonwebtoken";
 
-
 export const checkAuth= async (req,res,next)=>{
     try {
         const token=req.headers.authorization;
@@ -16,6 +15,6 @@ export const checkAuth= async (req,res,next)=>{
     } catch (error) {
         res
       .status(500)
-      .json({ success: false, message: `Bad request ${error.message} ` });
+      .json({ success: false, message:`Bad request ${error.message}`});
     }
 }

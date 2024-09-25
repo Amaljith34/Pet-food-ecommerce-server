@@ -1,3 +1,4 @@
+
 import mongoose from "mongoose";
 
 const paymentSchema=new mongoose.Schema({
@@ -17,6 +18,10 @@ const paymentSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    category:{
+          type:String,
+          required:true
+    },
     currency:{
         type:String,
         default:"INR"
@@ -31,4 +36,4 @@ const paymentSchema=new mongoose.Schema({
     }
 })
 const Paymentschema=mongoose.model("Payment",paymentSchema)
-export default Paymentschema
+export default Paymentschema  

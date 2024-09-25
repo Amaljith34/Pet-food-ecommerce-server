@@ -1,12 +1,13 @@
 import express from 'express';
 import { signup ,login, logout} from '../../Controller/userSide/userController/userController.js';
-import { getproductById, getProducts,  } from '../../Controller/userSide/productController/productController.js';
+import { allProducts, getproductById, getProducts,  } from '../../Controller/userSide/productController/productController.js';
 import { addToCart, getCart, removeCart } from '../../Controller/userSide/cartController/cartController.js';
 import { cartContoller, handleCart } from '../../middleware/handleCart.js';
 import { addToWishList, deleteWishList, getWishList } from '../../Controller/userSide/wishListController/wishListController.js';
 import { createPayment } from '../../Controller/userSide/paymentController/paymentController.js';
-import { getOrders } from '../../Controller/userSide/orderController/orderContoller.js';
-// import { checkAuth } from '../../middleware/auth.js';
+import { getOrders, orderItem } from '../../Controller/userSide/orderController/orderContoller.js';
+import { checkAuth } from '../../middleware/auth.js';
+
 
 
 const userRouter = express.Router();
@@ -19,16 +20,19 @@ userRouter.post("/login",login)
 userRouter.post("/:id/logout",logout)
 
 userRouter.get("/products",getProducts)
-userRouter.get("/products/:id",getproductById)
+userRouter.get("/:id/products",getproductById)
+userRouter.get("/allproducts",allProducts)
 
-userRouter.post("/:id/cart",handleCart,cartContoller)
-userRouter.get("/:id/cart",getCart)
-userRouter.delete("/:id/cart",removeCart)
+userRouter.post("/:id/cart",checkAuth,handleCart,cartContoller)
+userRouter.get("/:id/cart",checkAuth,getCart)
+userRouter.delete("/:id/cart",checkAuth,removeCart)
 
-userRouter.post("/:id/wishlist",addToWishList)
-userRouter.get("/:id/wishlist",getWishList)
-userRouter.delete("/:id/wishlist",deleteWishList)
+userRouter.post("/:id/wishlist",checkAuth,addToWishList)
+userRouter.get("/:id/wishlist",checkAuth,getWishList)
+userRouter.delete("/:id/wishlist",checkAuth,deleteWishList)
 
 userRouter.post("/:id/payment",createPayment)
-userRouter.get("/:id/order",getOrders)
+userRouter.get("/:id/order",checkAuth,getOrders)
+userRouter.post("/:id/order",checkAuth,orderItem)
+// userRouter.post("/:id/paymentvaification",checkAuth,paymentVerification)
 export default userRouter;

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import Productschema from '../../../Model/productSchema/productSchema.js';
-//display all products
+//display all products by category
 export const getProducts=async (req,res)=>{
     try {
         const {category}=req.body;
@@ -38,3 +38,15 @@ export const getproductById= async(req,res)=>{
     }
 }
 
+
+//display all product
+
+export const allProducts=async(req,res)=>{
+    try {
+        let getProducts
+        getProducts=await Productschema.find();
+        res.status(200).json({success:true,data:getProducts,message:"feth all products"})
+    } catch (error) {
+        
+    }
+}
