@@ -3,7 +3,7 @@ import Productschema from '../../../Model/productSchema/productSchema.js';
 //display all products by category
 export const getProducts=async (req,res)=>{
     try {
-        const {category}=req.body;
+        const {category}=req.query;
         let getProducts;
         if(category){
             getProducts=await Productschema.find({category});
