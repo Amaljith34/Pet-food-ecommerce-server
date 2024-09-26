@@ -5,7 +5,7 @@ import Cart from "../../../Model/cartSchema/cartSchema.js";
 import { User } from "../../../Model/userSchema/userSchema.js";
 
 // Order products
-export const  orderItem = async (req, res) => {
+export const orderItem = async (req, res) => {
   try {
     const userId = req.params.id;
     const { productId } = req.body;
@@ -47,22 +47,23 @@ export const  orderItem = async (req, res) => {
 
     let order = await OrderSchema.findOne({ userId });
 
-    if (!order) {
+    if (order) {
       order = new OrderSchema({
         userId,
         products: [{ productId, quantity: productInCart.quantity }],
       });
-    } else {
-      const productIndex = order.products.findIndex(
-        (product) => product.productId.toString() === productId
-      );
-
-      if (productIndex !== -1) {
-        order.products[productIndex].quantity += productInCart.quantity;
-      } else {
-        order.products.push({ productId, quantity: productInCart.quantity });
-      }
     }
+    //  else {
+    //   const productIndex = order.products.findIndex(
+    //     (product) => product.productId.toString() === productId
+    //   );
+
+    //   if (productIndex !== -1) {
+    //     order.products[productIndex].quantity += productInCart.quantity;
+    //   } else {
+    //     order.products.push({ productId, quantity: productInCart.quantity });
+    //   }
+    // }
     user.order.push(order._id)
     await user.save();
     await order.save();

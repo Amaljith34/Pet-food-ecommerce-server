@@ -8,12 +8,7 @@ import { createPayment } from '../../Controller/userSide/paymentController/payme
 import { getOrders, orderItem } from '../../Controller/userSide/orderController/orderContoller.js';
 import { checkAuth } from '../../middleware/auth.js';
 
-
-
 const userRouter = express.Router();
-
-
-
 
 userRouter.post("/register", signup);
 userRouter.post("/login",login)

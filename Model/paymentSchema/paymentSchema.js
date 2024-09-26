@@ -33,7 +33,19 @@ const paymentSchema=new mongoose.Schema({
     purchaseDate:{
         type:Date,
         default:Date.now
-    }
+    },
+    address: {
+        type: String,
+      },
+      city: {
+        type: String,
+      },
+      state: {
+        type: String,
+      },
+      pincode: {
+        type: Number,
+      },
 })
 const Paymentschema=mongoose.model("Payment",paymentSchema)
 export default Paymentschema  

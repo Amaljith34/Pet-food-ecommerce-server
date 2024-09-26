@@ -26,7 +26,7 @@ export const createPayment = async (req, res) => {
   
       const receipt = `receipt_${Date.now()}`;
       const options = {
-        amount: amount * 100, 
+        amount, 
         currency,
         receipt
       };

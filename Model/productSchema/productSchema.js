@@ -5,10 +5,6 @@ import mongoose from "mongoose";
             type:String,
             required:true
         },
-        name:{
-            type:String,
-            required:true
-        },
         imageSrc:{
             type:String
         },
