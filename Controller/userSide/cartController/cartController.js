@@ -31,7 +31,7 @@ export const addToCart = async (req, res) => {
          userId,
          products: [{ productId, quantity }],
        });
-       
+      user.cart=cart._id 
      } else {
        const existingProduct = cart.products.find(
          (product) => product.productId.toString() === productId
@@ -44,7 +44,7 @@ export const addToCart = async (req, res) => {
          cart.products.push({ productId, quantity });
        }
      }
-     // user.cart.push(cart._id);
+    //  user.cart.push(cart._id);
      await user.save();
      await cart.save();
      res.status(200).json({

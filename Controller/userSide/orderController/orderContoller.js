@@ -5,7 +5,7 @@ import Cart from "../../../Model/cartSchema/cartSchema.js";
 import { User } from "../../../Model/userSchema/userSchema.js";
 
 // Order products
-export const orderItem = async (req, res) => {
+export const  orderItem = async (req, res) => {
   try {
     const userId = req.params.id;
     const { productId } = req.body;

@@ -17,7 +17,7 @@ const userRouter = express.Router();
 
 userRouter.post("/register", signup);
 userRouter.post("/login",login)
-userRouter.post("/:id/logout",logout)
+userRouter.post("/logout",logout)
 
 userRouter.get("/products",getProducts)
 userRouter.get("/:id/products",getproductById)
@@ -31,8 +31,8 @@ userRouter.post("/:id/wishlist",checkAuth,addToWishList)
 userRouter.get("/:id/wishlist",checkAuth,getWishList)
 userRouter.delete("/:id/wishlist",checkAuth,deleteWishList)
 
-userRouter.post("/:id/payment",createPayment)
-userRouter.get("/:id/order",checkAuth,getOrders)
-userRouter.post("/:id/order",checkAuth,orderItem)
+userRouter.post("/:id/payments",createPayment)
+userRouter.get("/:id/orders",checkAuth,getOrders)
+userRouter.post("/:id/orders",checkAuth,orderItem)
 // userRouter.post("/:id/paymentvaification",checkAuth,paymentVerification)
 export default userRouter;

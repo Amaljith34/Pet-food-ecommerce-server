@@ -78,7 +78,7 @@ import signUpValidation from '../../../middleware/joivalidation/signUpValidation
 import { comparePassword, hashedPassword } from '../../../utils/bcrypt.js';
 import { generateToken } from '../../../utils/jwt.js';
 
-// Registration
+// registration
 export const signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -114,7 +114,7 @@ export const signup = async (req, res) => {
     }
 }
 
-// Login
+// login
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
