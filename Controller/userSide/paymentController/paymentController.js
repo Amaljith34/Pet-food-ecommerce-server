@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import Cart from "../../../Model/cartSchema/cartSchema.js";
 import razorpay from "../../../config/razorpay.js";
+import { User } from "../../../Model/userSchema/userSchema.js";
+import OrderSchema from "../../../Model/orderSchema/orderSchema.js";
 
 
 // payment 
@@ -8,7 +10,7 @@ import razorpay from "../../../config/razorpay.js";
 export const createPayment = async (req, res) => {
     try {
       const userId = req.params.id;
-      const { currency } = req.body;
+      const { currency, address,city,state,pincode} = req.body;
   
       if (!mongoose.Types.ObjectId.isValid(userId)) {
         return res.status(400).json({ success: false, message: "Invalid user id" });
@@ -58,6 +60,100 @@ export const createPayment = async (req, res) => {
       });
     }
   };
+
+  export  const paymentVerification = async (req, res) => {
+    try {
+      const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
+        req.body;
+      const userId = req.params.id;
+
+      const cart = await Cart
+        .findOne({ userId })
+        .populate("products.productId");
+      if (!cart) {
+        return res
+          .status(404)
+          .json({ success: false, message: "Cart not found" });
+      }
+
+      const amount = cart.products
+        .map((item) => item.productId.price)
+        .reduce((a, b) => a + b, 0);
+
+      if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
+        return res.status(400).json({
+          success: false,
+          message: "Missing payment verification details",
+        });
+      }
+
+      const body = razorpay_order_id + "|" + razorpay_payment_id;
+
+      const expectedSignature = crypto
+        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+        .update(body.toString())
+        .digest("hex");
+
+      const isAuthentic = expectedSignature === razorpay_signature;
+
+      if (isAuthentic) {
+        const user = await User.findById(userId);
+
+        const order = new OrderSchema({
+          userId,
+          products: cart.products.map((item) => ({
+            productId: item.productId._id,
+            quantity: item.quantity,
+          })),
+          Total_Amount: amount,
+          Payment_Id: razorpay_payment_id,
+          Customer_Name: user.UserName,
+          Total_Items: cart.products.length,
+          // address: user.address,
+          // city: user.city,
+          // state: user.state,
+          // pincode: user.pincode,
+          contact: user.contact,
+        });
+
+        await order.save();
+
+        await Cart.deleteOne({ userId });
+
+        const payment = new paymentSchema({
+          razorpay_order_id,
+          razorpay_payment_id,
+          razorpay_signature,
+          amount: amount,
+          currency: req.body.currency,
+          status: "success",
+        });
+
+        user.order.push(order._id);
+        await user.save();
+        await payment.save();
+
+        res.status(200).json({
+          success: true,
+          message: "Payment verification successful and Ordered Successfully ",
+          data: payment,
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "Invalid payment signature",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: `Payment verification failed: ${error.message}`,
+      });
+    }
+  };
+
+  
+
 
 
   
