@@ -7,11 +7,12 @@ import { addToWishList, deleteWishList, getWishList } from '../../Controller/use
 import { createPayment } from '../../Controller/userSide/paymentController/paymentController.js';
 import { getOrders, orderItem } from '../../Controller/userSide/orderController/orderContoller.js';
 import { checkAuth } from '../../middleware/auth.js';
+import { Login } from '../../Controller/authController/authController.js';
 
 const userRouter = express.Router();
 
 userRouter.post("/register", signup);
-userRouter.post("/login",login)
+userRouter.post("/login",Login)
 userRouter.post("/logout",logout)
 
 userRouter.get("/products",getProducts)
