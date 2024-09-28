@@ -7,7 +7,7 @@ import { User } from "../../../Model/userSchema/userSchema.js";
 export const getAllUser=async(req,res)=>{
     try {
         const users= await User.find()
-        res.status(200).json({success:false,message:"User fetch successfully",data:users})
+        res.status(200).json({success:false,message:"User fetch successfully ",data:users})
     } catch (error) {
         res.status(500).json({success:false,message:`Bad request ${error.message}`})
 
