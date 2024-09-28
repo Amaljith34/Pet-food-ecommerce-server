@@ -13,7 +13,6 @@ export const getAllUser=async(req,res)=>{
 
     }
 }
-
 //display user by id
 export const getUserById=async(req,res)=>{
     try {
