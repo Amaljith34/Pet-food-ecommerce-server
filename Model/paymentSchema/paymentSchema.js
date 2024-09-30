@@ -18,10 +18,6 @@ const paymentSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    category:{
-          type:String,
-          required:true
-    },
     currency:{
         type:String,
         default:"INR"

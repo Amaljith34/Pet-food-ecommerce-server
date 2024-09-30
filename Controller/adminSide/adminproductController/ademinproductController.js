@@ -55,3 +55,18 @@ export const updateProduct=async(req,res)=>{
 
 //delete product
 
+export const deleteProduct=async(req,res)=>{
+  try {
+    const productId=req.params.id;
+    if(!mongoose.Types.ObjectId.isValid(productId)){
+      return res.status(400).json({success:false,message:"Invalid product id"})
+    }
+    const deletedProduct=await Productschema.findByIdAndDelete(productId)
+   if(!deletedProduct){
+    return res.status(404).json({success:false,message:"Product not found"})
+   }
+   res.status(200).json({success:true,message:"Product deleted successfully",data:deletedProduct})
+  } catch (error) {
+    res.status(500).json({ success: false, message: `Bad request: ${error.message}` });
+  }
+}

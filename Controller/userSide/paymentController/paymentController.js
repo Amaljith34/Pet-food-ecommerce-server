@@ -3,8 +3,8 @@ import Cart from "../../../Model/cartSchema/cartSchema.js";
 import razorpay from "../../../config/razorpay.js";
 import { User } from "../../../Model/userSchema/userSchema.js";
 import OrderSchema from "../../../Model/orderSchema/orderSchema.js";
-
-
+import crypto from 'crypto'
+import Paymentschema from '../../../Model/paymentSchema/paymentSchema.js'
 // payment 
 
 export const createPayment = async (req, res) => {
@@ -28,7 +28,7 @@ export const createPayment = async (req, res) => {
   
       const receipt = `receipt_${Date.now()}`;
       const options = {
-        amount, 
+        amount: amount*100, 
         currency,
         receipt
       };
@@ -61,38 +61,27 @@ export const createPayment = async (req, res) => {
     }
   };
 
+
+  //varification
+
   export  const paymentVerification = async (req, res) => {
     try {
-      const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
-        req.body;
+      const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =req.body;
       const userId = req.params.id;
-
-      const cart = await Cart
-        .findOne({ userId })
-        .populate("products.productId");
-      if (!cart) {
-        return res
-          .status(404)
-          .json({ success: false, message: "Cart not found" });
+      if(!mongoose.Types.ObjectId.isValid(userId)){
+        return res.status(400).json({success:false,message:"Invalid user id"})
       }
-
-      const amount = cart.products
-        .map((item) => item.productId.price)
-        .reduce((a, b) => a + b, 0);
+      const cart = await Cart.findOne({ userId }).populate("products.productId");
+      if (!cart) {
+        return res.status(404).json({ success: false, message: "Cart not found" });
+      }
+      const amount = cart.products.map(item => item.productId.price * item.quantity).reduce((a, b) => a + b, 0);
 
       if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
-        return res.status(400).json({
-          success: false,
-          message: "Missing payment verification details",
-        });
+        return res.status(400).json({success: false,message: "Missing payment verification details",});
       }
-
       const body = razorpay_order_id + "|" + razorpay_payment_id;
-
-      const expectedSignature = crypto
-        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-        .update(body.toString())
-        .digest("hex");
+      const expectedSignature = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET).update(body.toString()).digest("hex");
 
       const isAuthentic = expectedSignature === razorpay_signature;
 
@@ -120,7 +109,7 @@ export const createPayment = async (req, res) => {
 
         await Cart.deleteOne({ userId });
 
-        const payment = new paymentSchema({
+        const payment = new Paymentschema({
           razorpay_order_id,
           razorpay_payment_id,
           razorpay_signature,
@@ -151,6 +140,11 @@ export const createPayment = async (req, res) => {
       });
     }
   };
+
+
+
+
+
 
   
 
