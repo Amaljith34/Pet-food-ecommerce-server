@@ -17,6 +17,9 @@ export const Login=async(req,res)=>{
         if(!user){
             return res.status(400).json({success:false,message:"Invalid user"})
         }
+        if(user.isBlockd){
+            return res.status(400).json({success:false,message:"Sorry ,Your blocked"})
+        }
         const token=generateToken(user.id)
         if(user.role=== "admin"){
             res.status(200).json({success:true,message:"Admin login successfully",token,username:user.UserName,userid:user.id})

@@ -1,7 +1,7 @@
 import express from 'express' ;
-import { getAllUser, getUserById } from '../../Controller/adminSide/userListController/userListController.js';
+import { getAllUser, getUserById } from '../../Controller/adminSide/adminuserListController/userListController.js';
 import { checkAuth } from '../../middleware/auth.js';
-import { addProduct } from '../../Controller/adminSide/productController/productController.js';
+import { addProduct } from '../../Controller/adminSide/adminproductController/ademinproductController.js';
 const adminRouter=express.Router();
 
 
