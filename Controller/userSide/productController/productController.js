@@ -44,7 +44,7 @@ export const getproductById= async(req,res)=>{
 export const allProducts=async(req,res)=>{
     try {
         let getProducts
-        getProducts=await Productschema.find();
+        getProducts=await Productschema.find({isShow:false});
         res.status(200).json({success:true,data:getProducts,message:"feth all products"})
     } catch (error) {
         

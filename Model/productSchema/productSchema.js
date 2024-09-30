@@ -30,6 +30,10 @@ import mongoose from "mongoose";
         isDeleted:{
             type:Boolean,
             default:false
+        },
+        isShow:{
+            type:Boolean,
+            default:false
         }
     },
     {
