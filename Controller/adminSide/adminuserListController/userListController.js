@@ -32,4 +32,19 @@ export const getUserById=async(req,res)=>{
     }
 }
 
+export const toggluserBlock=async(req,res)=>{
+    try {
+        const userId=req.params.id;
+        const user=await User.findById(userId );
+            if(!user){
+                res.status(400).json({success:false,message:"User not found"})
+            }
+            const newState=!user.isBlockd;
 
+            await User.findByIdAndUpdate(userId,{isBlockd:newState})
+            const message=newState ? "User block successfully":"User unblock successfully"
+            return res.status(200).json({success:true,message})
+    } catch (error) {
+        res.status(500).send({ success: false, message: `Internal Server Error: ${error.message}` });
+    }
+}
