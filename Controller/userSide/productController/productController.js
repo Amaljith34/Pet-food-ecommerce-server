@@ -1,24 +1,22 @@
 import mongoose from 'mongoose';
 import Productschema from '../../../Model/productSchema/productSchema.js';
 //display all products by category
-export const getProducts=async (req,res)=>{
+export const getProducts = async (req, res) => {
     try {
-        const {category}=req.query;
-        let getProducts;
-        if(category){
-            getProducts=await Productschema.find({category});
-            if(getProducts.length===0){
-                return res.status(400).json({success:false,message:"Category not Found"})
-            }
+        const { category } = req.query;
+        if (!category) {
+            return res.status(400).json({ success: false, message: "Category not defined" });
         }
-        else{
-            getProducts=await Productschema.find();
+        const products = await Productschema.find({ category, isShow: false } );
+        if (products.length === 0) {
+            return res.status(404).json({ success: false, message: "No products available for the given category" });
         }
-        res.status(200).json({success:true,data:getProducts,message:"Product fetched successfuly"})
+        return res.status(200).json({ success: true, data: products, message: "Products fetched successfully" });
     } catch (error) {
-        res.status(500).json({success:false,message:`bad request ${error.message}`})
+        return res.status(500).json({ success: false, message: `Server error: ${error.message}` });
     }
-}
+};
+
 
 //display product by id
 

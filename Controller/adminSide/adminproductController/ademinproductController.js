@@ -66,8 +66,8 @@ export const hideProduct=async(req,res)=>{
       return res.status(404).json({ success: false, message: "Product not found" });
     }
     const togleshow=!product.isShow;
-    const deletedProduct=await Productschema.findByIdAndDelete(productId,{ isShow: togleshow },{ new: true })
-   if(!deletedProduct){
+    const hidedProduct=await Productschema.findByIdAndUpdate(productId,{ isShow: togleshow },{ new: true })
+   if(!hidedProduct){
     return res.status(404).json({success:false,message:"Product not found"})
    }
    res.status(200).json({success:true,message:"Product hide successfully",data:deletedProduct})

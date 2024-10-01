@@ -15,19 +15,19 @@ userRouter.post("/login",Login)
 // userRouter.post("/logout",logout)
 
 userRouter.get("/products",getProducts)
-userRouter.get("/:id/products",getproductById)
+userRouter.get("/products/:id",getproductById)
 userRouter.get("/allproducts",allProducts)
 
 userRouter.post("/cart/:id",checkAuth,handleCart,cartContoller)
 userRouter.get("/cart/:id",checkAuth,getCart)
 userRouter.delete("/cart/:id",checkAuth,removeCart)
 
-userRouter.post("/:id/wishlist",checkAuth,addToWishList)
-userRouter.get("/:id/wishlist",checkAuth,getWishList)
-userRouter.delete("/:id/wishlist",checkAuth,deleteWishList)
+userRouter.post("/wishlist/:id",checkAuth,addToWishList)
+userRouter.get("/wishlist/:id",checkAuth,getWishList)
+userRouter.delete("/wishlist/:id",checkAuth,deleteWishList)
 
 userRouter.post("/payments/:id",createPayment)
-userRouter.get("/:id/orders",checkAuth,getOrders)
-userRouter.post("/:id/orders",checkAuth,orderItem)
+userRouter.get("/orders/:id",checkAuth,getOrders)
+userRouter.post("/orders/:id",checkAuth,orderItem)
 userRouter.post("/paymentvaification/:id",paymentVerification)
 export default userRouter;
