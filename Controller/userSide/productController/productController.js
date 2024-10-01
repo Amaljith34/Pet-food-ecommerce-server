@@ -30,6 +30,7 @@ export const getproductById= async(req,res)=>{
         if(!getproductId){
             return res.status(400).json({success:false,message:`product not available ${productId}`})
         }
+        
         res.status(200).json({success:true,data:getproductId,message:`product fetched by id successfully`})
     } catch (error) {
         res.status(400).json({success:false,message:`bad request ${error.message}`})

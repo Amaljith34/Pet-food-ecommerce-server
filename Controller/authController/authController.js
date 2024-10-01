@@ -52,11 +52,11 @@ export const Login=async(req,res)=>{
         }
         const token=generateToken(user.id)
         if(user.role=== "admin"){
-            res.status(200).json({success:true,message:"Admin login successfully",token,username:user.UserName,userid:user.id})
+           return res.status(200).json({success:true,message:"Admin login successfully",token,username:user.UserName,userid:user.id})
         }
-        else{
+        
             res.status(200).json({success:true,message:"user login successfully",token,Username:user.UserName,UserId:user.id})
-        }
+        
     } catch (error) {
         res.status(500).json({success:false,message:`Bad requset: ${error.message}`})
     }
