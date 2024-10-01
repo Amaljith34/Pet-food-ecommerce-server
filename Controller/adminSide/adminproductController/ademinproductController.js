@@ -98,3 +98,5 @@ export const deleteProduct = async (req, res) => {
       .json({ success: false, message: `Bad request:${error.message}` });
   }
 };
+
+

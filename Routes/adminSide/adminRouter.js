@@ -3,6 +3,7 @@ import { getAllUser, getUserById, toggluserBlock } from '../../Controller/adminS
 import { checkAuth } from '../../middleware/auth.js';
 import { addProduct, deleteProduct, hideProduct, updateProduct } from '../../Controller/adminSide/adminproductController/ademinproductController.js';
 import { totalOrders, totalRevenue } from '../../Controller/adminSide/adminAnalytics/adminAnalytics.js';
+import { getAllOrder } from '../../Controller/adminSide/adminorderController/adminordercontroller.js';
 const adminRouter=express.Router();
 
 
@@ -17,7 +18,10 @@ adminRouter.patch("/product/:id",checkAuth,updateProduct)
 adminRouter.patch("/producthide/:id",hideProduct)
 adminRouter.delete("/product/:id",deleteProduct)
 
+adminRouter.get("/allorders",getAllOrder)
+
 adminRouter.get("/analytics-orders",totalOrders)
 adminRouter.get("/analytics-revenue",totalRevenue)
+
 
 export default adminRouter
