@@ -12,3 +12,18 @@ export const totalOrders=async(req,res)=>{
         res.status(500).json({ success: false, message: `Bad request:${error.message}` });
     }
 }                          
+export const totalRevenue = async (req, res) => {
+    try {
+      const orders = await OrderSchema.find().populate("products.productId");
+      if (!orders) {
+        return res.status(400).json({ success: false, message: "No Sales yet!" });
+      }
+      const totalRevenue = orders.map((order) => order.Total_Amount).flat(Infinity).reduce((a, b) => a + b, 0);
+       res.status(200).json({success: true, message: `Total revenue is ${totalRevenue}`,});
+    } catch (error) {
+      res
+        .status(500)
+        .json({ success: false, message: `Bad request:${error.message}` });
+    }
+  };
+  
