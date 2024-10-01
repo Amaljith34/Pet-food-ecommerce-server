@@ -70,7 +70,7 @@ export const hideProduct=async(req,res)=>{
    if(!hidedProduct){
     return res.status(404).json({success:false,message:"Product not found"})
    }
-   res.status(200).json({success:true,message:"Product hide successfully",data:deletedProduct})
+   res.status(200).json({success:true,message:"Product hide successfully",data:hideProduct})
   } catch (error) {
     res.status(500).json({ success: false, message: `Bad request: ${error.message}` });
   }
