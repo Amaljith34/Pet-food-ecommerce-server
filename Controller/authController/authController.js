@@ -19,7 +19,7 @@ export const signup=async(req,res)=>{
         const newUser=new User({
             email:validatedUser.email,
             UserName:validatedUser.UserName,
-            password:validatedUser.password,
+            password:hashPassword,
             contact:validatedUser.contact
         })
         await newUser.save()
@@ -33,6 +33,7 @@ export const signup=async(req,res)=>{
 
 
 
+//login
 
 
 export const Login=async(req,res)=>{

@@ -19,13 +19,3 @@ export const checkAuth= async (req,res,next)=>{
     }
 }
 
-export const adminAuth =async(req,res,next)=>{
-    try {
-        if(req.user.role || !req.user !== "admin"){
-            res.status(403).json({success:false,message:"Access denied. Admins only."})
-        }
-        next()
-    } catch (error) {
-        res.status(500).json({ success: false, message:`Bad request ${error.message}`});
-    }
-}

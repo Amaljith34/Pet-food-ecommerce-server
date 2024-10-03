@@ -27,9 +27,7 @@ export const addToCart = async (req, res) => {
      let cart = await  Cart.findOne({ userId });
  
      if (!cart) {
-       cart = new Cart({
-         userId,
-         products: [{ productId, quantity }],
+       cart = new Cart({userId,products: [{ productId, quantity }],
        });
       user.cart=cart._id 
      } else {
@@ -39,7 +37,7 @@ export const addToCart = async (req, res) => {
  
        if (existingProduct) {
          existingProduct.quantity += quantity;
-        return res.status(200).json({success:true,dtat:cart,message:"alredy added"})
+        return res.status(200).json({success:true,message:"alredy added"})
        } else {
          cart.products.push({ productId, quantity });
        }
@@ -128,7 +126,7 @@ export const quantityIncrement= async (req,res)=>{
     if(productExists===-1){
       return res.status(404).json({success:false,message:"Product not found"})
     }
-    const product=await cart.products.findIndex((product)=>product.productId.toString()===productId)
+    const product= await cart.products.findIndex((product)=>product.productId.toString()===productId)
     if(product>=0){
       cart.products[product].quantity += 1;
     }

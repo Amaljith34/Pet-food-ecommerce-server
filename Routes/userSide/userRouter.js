@@ -1,5 +1,5 @@
 import express from 'express';
-import { allProducts, getproductById, getProducts,  } from '../../Controller/userSide/productController/productController.js';
+import { allProducts, getproductById, getProductsBycategory  } from '../../Controller/userSide/productController/productController.js';
 import {  getCart, removeCart } from '../../Controller/userSide/cartController/cartController.js';
 import { cartContoller, handleCart } from '../../middleware/handleCart.js';
 import { addToWishList, deleteWishList, getWishList } from '../../Controller/userSide/wishListController/wishListController.js';
@@ -12,11 +12,11 @@ const userRouter = express.Router();
 
 userRouter.post("/register", signup);
 userRouter.post("/login",Login)
-// userRouter.post("/logout",logout)
+// userRouter.post("/logout",)
 
-userRouter.get("/products",getProducts)
+userRouter.get("/products",allProducts)
+userRouter.get("/jj",getProductsBycategory)
 userRouter.get("/products/:id",getproductById)
-userRouter.get("/allproducts",allProducts)
 
 userRouter.post("/cart/:id",checkAuth,handleCart,cartContoller)
 userRouter.get("/cart/:id",checkAuth,getCart)

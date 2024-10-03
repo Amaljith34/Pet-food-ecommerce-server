@@ -8,11 +8,23 @@ dotenv.config()
 const app = express();
 
 //conection
-main().catch(err => console.log(err));
+// main().catch(err => console.log(err));
+
+// async function main() {
+//   await mongoose.connect('mongodb+srv://jith51541:Ge3V9KpKo9iLZuf7@cluster0.0q0zu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+// }
 
 async function main() {
-  await mongoose.connect('mongodb+srv://jith51541:Ge3V9KpKo9iLZuf7@cluster0.0q0zu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+  try {
+    await mongoose.connect(process.env.MONGO_CONNECTION);
+    console.log("MongoDB connected successful");
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+    process.exit(1);
+  }
 }
+
+main();
 
 
 

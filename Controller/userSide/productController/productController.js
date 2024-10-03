@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Productschema from '../../../Model/productSchema/productSchema.js';
 //display all products by category
-export const getProducts = async (req, res) => {
+export const getProductsBycategory = async (req, res) => {
     try {
         const { category } = req.query;
         if (!category) {

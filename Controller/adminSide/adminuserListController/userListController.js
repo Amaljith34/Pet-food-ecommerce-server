@@ -7,6 +7,9 @@ import { User } from "../../../Model/userSchema/userSchema.js";
 export const getAllUser=async(req,res)=>{
     try {
         const users= await User.find()
+        if(!users){
+            return res.status(400).json({success:false,message:"User not found"})
+        }
         res.status(200).json({success:false,message:"User fetch successfully ",data:users})
     } catch (error) {
         res.status(500).json({success:false,message:`Bad request ${error.message}`})
@@ -18,7 +21,7 @@ export const getUserById=async(req,res)=>{
     try {
         const userId=req.params.id;
         if(!mongoose.Types.ObjectId.isValid(userId)){
-            res.status(400).json({success:false,message:"No user found"})
+            res.status(400).json({success:false,message:"Invalid user id"})
         }
         const userById=await User.findById(userId)
         if (!userById) {
@@ -31,7 +34,7 @@ export const getUserById=async(req,res)=>{
 
     }
 }
-
+///block and unblock
 export const toggluserBlock=async(req,res)=>{
     try {
         const userId=req.params.id;
@@ -43,7 +46,7 @@ export const toggluserBlock=async(req,res)=>{
 
             await User.findByIdAndUpdate(userId,{isBlockd:newState})
             const message=newState ? "User block successfully":"User unblock successfully"
-            return res.status(200).json({success:true,message})
+            return res.status(200).json({success:true,message,useremail:user.email})
     } catch (error) {
         res.status(500).send({ success: false, message: `Internal Server Error: ${error.message}` });
     }
