@@ -23,7 +23,7 @@ export const signup=async(req,res)=>{
             contact:validatedUser.contact
         })
         await newUser.save()
-        res.status(200).json({success:true,message: "User registered successfully",data: newUser})
+        res.status(200).json({success:true,message: "User registered successfully!",data: newUser})
     } catch (error) {
         if (error.isJoi) {return res.status(400).json({success: false,message: `Validation error: ${error.message}`});
         }
