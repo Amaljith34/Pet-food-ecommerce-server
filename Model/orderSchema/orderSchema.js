@@ -25,6 +25,9 @@ const orderSchema= new mongoose.Schema({
     Payment_id:{
         type:String
     },
+    order_Id: {
+        type: String,
+      },
     Total_items:{
         type:Number
     },

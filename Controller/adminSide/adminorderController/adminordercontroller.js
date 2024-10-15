@@ -1,4 +1,5 @@
 import OrderSchema from "../../../Model/orderSchema/orderSchema.js";
+import { handleError } from "../../../utils/handleError.js";
 export const getAllOrder=async(req,res)=>{
     try {
         const allOrders=await OrderSchema.find()
@@ -11,6 +12,5 @@ export const getAllOrder=async(req,res)=>{
         res.status(200).json({success:true,message:"order featch successfully",data:allOrders})
 
     } catch (error) {
-        res.status(500).json({ success: false, message: `Bad request: ${error.message}` });
-    }
+        handleError(res, error);    }
 }

@@ -5,6 +5,7 @@ import { User } from "../../../Model/userSchema/userSchema.js";
 import OrderSchema from "../../../Model/orderSchema/orderSchema.js";
 import crypto from 'crypto'
 import Paymentschema from '../../../Model/paymentSchema/paymentSchema.js'
+import { handleError } from "../../../utils/handleError.js";
 
 
 // payment 
@@ -98,13 +99,14 @@ export const createPayment = async (req, res) => {
           })),
           Total_Amount: amount,
           Payment_Id: razorpay_payment_id,
+          order_Id:razorpay_order_id,
           Customer_Name: user.UserName,
           Total_Items: cart.products.length,
           // address: user.address,
           // city: user.city,
           // state: user.state,
           // pincode: user.pincode,
-          contact: user.contact,
+          
         });
 
         await order.save();
@@ -136,10 +138,7 @@ export const createPayment = async (req, res) => {
         });
       }
     } catch (error) {
-      res.status(500).json({
-        success: false,
-        message: `Payment verification failed: ${error.message}`,
-      });
+      handleError(res, error);
     }
   };
 

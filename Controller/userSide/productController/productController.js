@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Productschema from '../../../Model/productSchema/productSchema.js';
+import { handleError } from '../../../utils/handleError.js';
 //display all products by category
 export const getProductsBycategory = async (req, res) => {
     try {
@@ -13,8 +14,7 @@ export const getProductsBycategory = async (req, res) => {
         }
         return res.status(200).json({ success: true, data: products, message: "Products fetched successfully" });
     } catch (error) {
-        return res.status(500).json({ success: false, message: `Server error: ${error.message}` });
-    }
+        handleError(res, error);    }
 };
 
 
@@ -33,8 +33,7 @@ export const getproductById= async(req,res)=>{
         
         res.status(200).json({success:true,data:getproductId,message:`product fetched by id successfully`})
     } catch (error) {
-        res.status(400).json({success:false,message:`bad request ${error.message}`})
-    }
+        handleError(res, error);    }
 }
 
 
@@ -46,6 +45,6 @@ export const allProducts=async(req,res)=>{
         getProducts=await Productschema.find({isShow:false});
         res.status(200).json({success:true,data:getProducts,message:"feth all products"})
     } catch (error) {
-        
+        handleError(res, error);
     }
 }

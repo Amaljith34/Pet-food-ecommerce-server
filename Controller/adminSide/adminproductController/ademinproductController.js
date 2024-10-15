@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Productschema from "../../../Model/productSchema/productSchema.js";
 import { addProductValidation, updateproductValidation } from "../../../middleware/joivalidation/productValidation.js";
+import { handleError } from "../../../utils/handleError.js";
 
 
 //addproeduct
@@ -24,8 +25,7 @@ export const addProduct = async (req, res) => {
     if (error.isJoi === true) {
       return res.status(400).json({success: false, message: `Validation error: ${error.message}`,});
     } else {
-      res.status(500).json({ success: false, message: `Bad request: ${error.message}` });
-    }
+handleError(res, error);    }
   }
 };
 
@@ -48,8 +48,7 @@ export const updateProduct=async(req,res)=>{
     if (error.isJoi === true) {
       return res.status(400).json({success: false, message: `Validation error: ${error.message}`,});
     } else {
-      res.status(500).json({ success: false, message: `Bad request: ${error.message}` });
-    }
+handleError(res, error);    }
   }
 }
 

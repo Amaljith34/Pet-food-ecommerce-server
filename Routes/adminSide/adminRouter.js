@@ -14,10 +14,9 @@ adminRouter.get("/userlist/:id",checkAuth,getUserById)
 adminRouter.post("/userblock/:id",checkAuth,toggluserBlock)
 
 adminRouter.post("/product" , checkAuth, addProduct);
-adminRouter.patch("/product/:id",checkAuth,updateProduct)
-adminRouter.patch("/producthide/:id",checkAuth,hideProduct)
+adminRouter.put("/product/:id",checkAuth,updateProduct)
+adminRouter.patch("/product/:id",checkAuth,hideProduct)
 adminRouter.delete("/product/:id",checkAuth,deleteProduct)    
-
 adminRouter.get("/cart",checkAuth,getallCart)
 adminRouter.get("/orders",checkAuth,getAllOrder)
 

@@ -9,9 +9,10 @@ import mongoose from "mongoose";
     {
       productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Products",
-        required: true,
-      },
+        ref: "Products", // Reference name should match the model name
+        required: true
+    }
+    ,
       quantity: {
         type: Number,
         required: true,

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { User } from "../../../Model/userSchema/userSchema.js";
+import { handleError } from "../../../utils/handleError.js";
 
 
 //display all users
@@ -12,8 +13,7 @@ export const getAllUser=async(req,res)=>{
         }
         res.status(200).json({success:false,message:"User fetch successfully ",data:users})
     } catch (error) {
-        res.status(500).json({success:false,message:`Bad request ${error.message}`})
-
+handleError(res, error);
     }
 }
 //display user by id
@@ -30,8 +30,7 @@ export const getUserById=async(req,res)=>{
           res.status(200).json({success:true,message:" User fetched successfully",data:userById})
 
     } catch (error) {
-        res.status(500).json({success:false,message:`Bad request ${error.message}`})
-
+handleError(res, error);
     }
 }
 ///block and unblock

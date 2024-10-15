@@ -34,6 +34,10 @@ import mongoose from "mongoose";
         isShow:{
             type:Boolean,
             default:false
+        },
+        discription:{
+            type:String,
+            required:true
         }
     },
     {

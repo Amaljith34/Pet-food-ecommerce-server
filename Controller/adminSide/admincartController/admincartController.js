@@ -1,4 +1,5 @@
 import Cart from "../../../Model/cartSchema/cartSchema.js";
+import { handleError } from "../../../utils/handleError.js";
 export const getallCart=async(req,res)=>{
     try {
         const allCarts=await Cart.find()
@@ -10,6 +11,6 @@ export const getallCart=async(req,res)=>{
         }
         res.status(200).json({success:true,message:"cart fetching success",data:allCarts})
     } catch (error) {
-        
+        handleError(res,error)
     }
 }

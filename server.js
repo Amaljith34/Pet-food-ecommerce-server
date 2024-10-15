@@ -3,8 +3,12 @@ import userRouter from './Routes/userSide/userRouter.js';
 import mongoose from 'mongoose';
 import dotenv from "dotenv";
 import adminRouter from './Routes/adminSide/adminRouter.js';
+import cors from 'cors'
+
+
 
 dotenv.config()
+
 const app = express();
 
 //conection
@@ -27,7 +31,7 @@ async function main() {
 main();
 
 
-
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

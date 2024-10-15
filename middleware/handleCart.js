@@ -1,4 +1,5 @@
 import { addToCart, quantityDecrement, quantityIncrement } from "../Controller/userSide/cartController/cartController.js";
+import { handleError } from "../utils/handleError.js";
 
 export const  handleCart=(req,res,next)=>{
     try {
@@ -23,6 +24,5 @@ export const cartContoller= async(req,res,next)=>{
     try {
         req.controller(req,res,next)
     } catch (error) {
-        res.status(500).json({success:false,message:`bad request ${error.message}`})
-    }
+        handleError(res, error);    }
 }

@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Wishlistschema from "../../../Model/wishListSchema/wishListSchema.js";
 import Productschema from "../../../Model/productSchema/productSchema.js";
 import { User } from "../../../Model/userSchema/userSchema.js";
+import { handleError } from "../../../utils/handleError.js";
 
 
 //add to wishlist
@@ -11,7 +12,7 @@ export const addToWishList= async(req,res)=>{
         const userId= req.params.id;
         const {productId}=req.body;
         if(!mongoose.Types.ObjectId.isValid(userId)){
-            return res.status(400).json({success:false,message:"invalid user id"})
+            return res.status(401).json({success:false,message:"invalid user id"})
         }
         const productExists=await Productschema.findById(productId);
         if(!productExists){
@@ -27,7 +28,7 @@ export const addToWishList= async(req,res)=>{
                 userId,
                 products:[{productId}]
             })
-            user.wishList=wishList._id
+            user.wishlist=wishList._id
         }
         else {
             const existingProduct=wishList.products.some(product=>product.productId.toString() === productId);
@@ -41,8 +42,7 @@ export const addToWishList= async(req,res)=>{
 
         res.status(200).json({success:true,data:wishList.products,message:"Product add to wishlist successfully"})
     } catch (error) {
-        res.status(500).json({success:false,message:`Fail to added to wishlish `})
-    }
+handleError(res,error)    }
 } 
 
 ///view wishlist
@@ -59,10 +59,7 @@ export const getWishList= async(req,res)=>{
         }
         res.status(200).json({success:true,data:wishList.products,message:"wishlist featch successfully"})
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: `Failed to fetch wishlist: ${error.message}`,
-        });
+        handleError(res,error)
     }
 }
 
@@ -104,6 +101,5 @@ export const  deleteWishList=async (req,res)=>{
     res.status(200).json({success:true,data:wishlist.products,message:"product removed from wishlist successfully"})
 }
 catch(error){
-    res.status(500).json({success:false,message:` Faild to remove product :${error.message}`})
-}
+    handleError(res,error)}
 }

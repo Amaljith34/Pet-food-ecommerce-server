@@ -3,6 +3,7 @@ import OrderSchema from "../../../Model/orderSchema/orderSchema.js";
 import Productschema from "../../../Model/productSchema/productSchema.js";
 import Cart from "../../../Model/cartSchema/cartSchema.js";
 import { User } from "../../../Model/userSchema/userSchema.js";
+import { handleError } from "../../../utils/handleError.js";
 
 //display order
 export const getOrders= async (req,res)=>{
@@ -18,6 +19,5 @@ export const getOrders= async (req,res)=>{
         res.status(200).json({success:true,data:orderList,message:"Order list fetch successfully"})
 
      } catch (error) {
-        res.status(500).json({success:false,message:`Faild to fetch order list : ${error.message}`})
-     }
+      handleError(res, error);     }
  }
