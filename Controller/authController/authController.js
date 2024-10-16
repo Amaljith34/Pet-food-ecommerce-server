@@ -24,7 +24,7 @@ export const signup=async(req,res)=>{
             
         })
         await newUser.save()
-        res.status(200).json({success:true,message: "User registered successfully",data: newUser})
+        res.status(200).json({success:true,message: "User registered successfully!",data: newUser})
     } catch (error) {
         if (error.isJoi) {return res.status(401).json({success: false,message: `Validation error: ${error.message}`});
         }
@@ -65,5 +65,9 @@ export const Login = async (req, res) => {
         res.status(200).json({ success: true, message: "User login successfully", token, username: user.UserName, userId: user.id });
 
     } catch (error) {
-        handleError(res, error);    }
-}
+
+        handleError(res, error);   
+     }
+
+    }
+
