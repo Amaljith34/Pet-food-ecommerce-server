@@ -1,9 +1,8 @@
-import mongoose from "mongoose";
 import { User } from "../../Model/userSchema/userSchema.js";
 import { comparePassword, hashedPassword } from "../../utils/bcrypt.js";
 import { generateToken } from "../../utils/jwt.js";
-import signUpValidation from "../../middleware/joivalidation/signUpValidation.js";
 import { handleError } from "../../utils/handleError.js";
+import signUpValidation from "../../middleware/joivalidation/signUpValidation.js";
 
 
 //registretion
